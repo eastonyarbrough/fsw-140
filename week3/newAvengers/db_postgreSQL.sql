@@ -51,6 +51,27 @@ WHERE interest = true
 -- List all Avengers who have more than 1000 appearances in alphabetic order.
 SELECT * FROM avengers WHERE appearances > 1000
 ORDER BY name ASC
--- PLEASE READ! The requirement of only those with appearances greater than 1000 is NOT POSSIBLE with this database. It is set to VARCHAR instead of INT. > does not work.
--- Because of this none of the remaining requirements are possible. I have attempted to change the data type in the appearances column and recreated the table entirely but...
--- ...due to the provided CSV file for the avengers table these requirements are not possible without manually recreating the entire table without the provided CSV file.
+-- ERROR IN CSV FILE HERE. MUST RUN BELOW COMMANDS.
+
+-- TO RESOLVE ERROR RUN ONE AT A TIME...
+DELETE FROM avengers WHERE appearances LIKE 'Appearances'
+
+ALTER TABLE avengers ALTER COLUMN appearances TYPE integer USING appearances::integer;
+
+SELECT appearances FROM avengers
+
+-- What Avengers do not have more than 1000 appearances?
+SELECT * FROM avengers WHERE appearances <= 1000
+ORDER BY name ASC
+
+-- Not more than 500?
+SELECT * FROM avengers WHERE appearances <= 500
+ORDER BY name ASC
+
+-- Not more than 50 and female?
+SELECT * FROM avengers WHERE appearances <= 50 AND gender LIKE 'FEMALE'
+ORDER BY name ASC
+
+-- More than 150, male, and are full members?
+SELECT * FROM avengers WHERE appearances > 150 AND gender LIKE 'MALE' AND honorary LIKE 'Full'
+ORDER BY name ASC
