@@ -36,8 +36,8 @@ JOIN orders ON employees.employeeid = orders.employeeid
 ORDER BY(orders.orderdate) ASC
 
 -- 9. Show the vendors and products they supply to us for products over $75 for vendors in Texas.
-SELECT vendors.vendname, vendors.vendstate, products.productname, products.retailprice FROM vendors, products
-WHERE products.retailprice > 75 AND vendors.vendstate = 'TX'
+SELECT vendors.vendname, vendors.vendstate, products.productname, products.retailprice FROM vendors
+JOIN products ON products.retailprice > 75 AND vendors.vendstate = 'TX'
 
 -- 10. Show employees who live in the same city and state as our vendors.
 SELECT CONCAT(employees.empfirstname, ' ', employees.emplastname) AS employee, vendors.vendname,
@@ -51,7 +51,7 @@ WHERE employees.empstate IS NULL
 
 -- 12. What is the average quoted price of a helmet?
 SELECT AVG(retailprice) AS average_price FROM products 
-WHERE categoryid = 1 AND productname LIKE '%Helmet%'
+WHERE productname LIKE '%Helmet%'
 
 -- 13. What was the date of the earliest ship date?
 SELECT MIN(shipdate) AS earliest_ship FROM orders
