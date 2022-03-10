@@ -52,23 +52,26 @@ app.get('/createTable', (req, res) => {
 })
 
 //Express route to insert data into the new table in the PostgreSQL database
-app.get('/insertData', (req, res) => {
-    let data = {
-        card_name: "Plains",
-        img_url: "https://cdn1.mtggoldfish.com/images/h/Plains-267-ZNR-672.jpg",
-        colors: "White",
-        mana_cost: 0,
-        description: "Basic Land",
-        card_count: 25,
-        deck: "Da Yeet Fleet"
-    }
-    let sql = `INSERT INTO cards(card_name, img_url, colors, mana_cost, description, card_count, deck) VALUES('${data.card_name}', '${data.img_url}', '${data.colors}', ${data.mana_cost}, '${data.description}', ${data.card_count}, '${data.deck}')`;
+app.post('/insertData', (req, res) => {
+    let sql = `INSERT INTO cards(card_name, img_url, colors, mana_cost, description, card_count, deck) VALUES('${req.body.card_name}', '${req.body.img_url}', '${req.body.colors}', ${req.body.mana_cost}, '${req.body.description}', ${req.body.card_count}, '${req.body.deck}')`;
     pool.query(sql, (err, result) => {
         if (err) {
             throw err;
         }
-        res.send('Data inserted successfully');
+        res.send(result.rows);
         console.log('Data inserted successfully');
+    })
+})
+
+//Express route to SELECT query of Custom Added Cards
+app.get('/get/:deckname', (req, res) => {
+    let sql = `SELECT * FROM cards WHERE deck = '${req.params.deckname}'`;
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result.rows);
+        console.log('Data selected successfully');
     })
 })
 
@@ -79,7 +82,7 @@ app.get('/getAllCards', (req, res) => {
         if (err) {
             throw err;
         }
-        res.send('Data selected successfully');
+        res.send(result.rows);
         console.log('Data selected successfully');
     })
 })
@@ -92,6 +95,42 @@ app.get('/getCard/:name', (req, res) => {
             throw err;
         }
         res.send('Data selected successfully');
+        console.log('Data selected successfully');
+    })
+})
+
+//Express route to use a SELECT query on the PostgreSQL database for SQUIRREL DECK
+app.get('/getSquirrel', (req, res) => {
+    let sql = `SELECT * FROM cards WHERE deck = 'Squirrel'`;
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result.rows);
+        console.log('Data selected successfully');
+    })
+})
+
+//Express route to use a SELECT query on the PostgreSQL database for DA YEET FLEET DECK
+app.get('/getDaYeetFleet', (req, res) => {
+    let sql = `SELECT * FROM cards WHERE deck = 'Da Yeet Fleet'`;
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result.rows);
+        console.log('Data selected successfully');
+    })
+})
+
+//Express route to use a SELECT query on the PostgreSQL database for RICOCHET DECK
+app.get('/getRicochet', (req, res) => {
+    let sql = `SELECT * FROM cards WHERE deck = 'Ricochet'`;
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result.rows);
         console.log('Data selected successfully');
     })
 })
