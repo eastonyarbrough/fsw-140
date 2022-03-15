@@ -106,7 +106,8 @@ function App() {
         'Content-Type': 'application/json'
       }
     })
-    getCustomDeck();
+      .then(getCustomDeck())
+      .catch(err => console.log(err))
   }
 
   const displayLinks = () => {
