@@ -136,9 +136,8 @@ app.get('/getRicochet', (req, res) => {
 })
 
 //Express route to use an UPDATE statement on the PostgreSQL database
-app.get('/updateCard/:name', (req, res) => {
-    let newManaCost = 1;
-    let sql = `UPDATE cards SET mana_cost = ${newManaCost} WHERE card_name = '${req.params.name}'`;
+app.put('/updateCard/:name', (req, res) => {
+    let sql = `UPDATE cards SET card_count = ${req.body.card_count} WHERE card_name = '${req.params.name}'`;
     pool.query(sql, (err, result) => {
         if (err) {
             throw err;

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DeckContext } from '../App.js'
+import { DeckContext } from '../App.js';
 
 export default function DisplayCards() {
     const deck = useContext(DeckContext);
@@ -7,8 +7,8 @@ export default function DisplayCards() {
     return(
         deck.map(e => {
             return(
-                <div>
-                    <img src={e.img_url} alt={e.card_name}></img>
+                <div className="cardHolder">
+                    <img src={e.img_url} alt={e.card_name} className="cardImg"></img>
                     <h3>Quantity: {e.card_count}</h3>
                 </div>
             );
