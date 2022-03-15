@@ -148,7 +148,7 @@ app.put('/updateCard/:name', (req, res) => {
 })
 
 //Express route to use the DELETE statement on the PostgreSQL database
-app.get('/deleteCard/:name', (req, res) => {
+app.delete('/deleteCard/:name', (req, res) => {
     let sql = `DELETE FROM cards WHERE card_name = '${req.params.name}'`;
     pool.query(sql, (err, result) => {
         if (err) {

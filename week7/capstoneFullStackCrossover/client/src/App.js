@@ -106,6 +106,7 @@ function App() {
         'Content-Type': 'application/json'
       }
     })
+    getCustomDeck();
   }
 
   const displayLinks = () => {
